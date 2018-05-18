@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="item"
+            type="com.software.m.m.creppycrypt.model.Currency" />
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_margin="8dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:text='@{item.name + " ," + item.symbol}'
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:transitionName="NAME" />
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Price BTC/USD: " + item.priceBtc + "/" + item.priceUsd}' />
+        <TextView
+            android:id="@+id/cap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Capitalization: $" + item.marketCapUsd/1000000 + "M"}' />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Available supply: " + item.availableSupply}' />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Total supply: " + item.totalSupply}' />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Max supply: " + item.maxSupply}' />
+        <TextView
+            android:id="@+id/vol_24h"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Last 24 hour trade volume: $" + item._24hVolumeUsd/1000000 + "M"}' />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/changed_in" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Last hour: " + item.percentChange1h + "%"}' />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Last 24 hours: " + item.percentChange24h + "%"}' />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Last week: " + item.percentChange7d + "%"}' />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{"Last update: " + item.dateFromLastUpdated}' />
+    </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+</layout>
