@@ -14,6 +14,7 @@ public class MainPresenter implements PresenterInterface {
     ModelInterface model;
     private MainActivityInterface viewI;
     private Currency displayedCurrency;
+    private int displayOrder;
 
     public MainPresenter() {
         super();
@@ -27,7 +28,9 @@ public class MainPresenter implements PresenterInterface {
 
     @Override
     public void getData() {
-        if(!model.hasData()){
+        if(model.hasData()){
+            viewI.displayCurrencyList(model.getLoadedData());
+        }else {
             viewI.showWait();
             model.getData(this);
         }
@@ -57,5 +60,20 @@ public class MainPresenter implements PresenterInterface {
     @Override
     public void showError(String message) {
         viewI.showError(message);
+    }
+
+    @Override
+    public void setDisplayOrder(int displayOrder) {
+        this.displayOrder = displayOrder;
+    }
+
+    @Override
+    public int getDisplayOrder() {
+        return displayOrder;
+    }
+
+    @Override
+    public void showDisplayOrder() {
+        viewI.setSpinnerSelection(displayOrder);
     }
 }

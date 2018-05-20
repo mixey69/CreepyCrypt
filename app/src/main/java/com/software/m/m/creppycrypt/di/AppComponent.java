@@ -4,6 +4,7 @@ import com.software.m.m.creppycrypt.presenter.MainPresenter;
 import com.software.m.m.creppycrypt.view.CurrencyInfoFragment;
 import com.software.m.m.creppycrypt.view.MainActivity;
 import com.software.m.m.creppycrypt.vm.CurrencyItemViewModel;
+import com.software.m.m.creppycrypt.vm.MainViewModel;
 
 import javax.inject.Singleton;
 
@@ -16,4 +17,5 @@ public interface AppComponent {
     void inject(MainActivity mainActivity);
     void inject(CurrencyItemViewModel currencyItemViewModel);
     void inject(CurrencyInfoFragment currencyInfoFragment);
+    void inject(MainViewModel mainViewModel);
 }

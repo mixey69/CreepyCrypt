@@ -10,6 +10,7 @@
     </data>
 
     <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.MainActivity">
@@ -48,6 +49,7 @@
                         android:layout_height="match_parent" />
 
                     <Spinner
+                        android:id="@+id/order"
                         android:layout_weight="3"
                         android:layout_width="1dp"
                         android:layout_height="match_parent"

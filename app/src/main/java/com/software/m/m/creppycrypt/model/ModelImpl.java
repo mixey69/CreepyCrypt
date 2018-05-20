@@ -79,4 +79,9 @@ public class ModelImpl implements ModelInterface {
     public boolean hasData() {
         return currencies != null;
     }
+
+    @Override
+    public List<Currency> getLoadedData() {
+        return currencies;
+    }
 }

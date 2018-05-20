@@ -9,4 +9,5 @@ public interface MainActivityInterface {
     void showWait();
     void showError(String message);
     void showCurrency(Currency currency);
+    void setSpinnerSelection(int pos);
 }

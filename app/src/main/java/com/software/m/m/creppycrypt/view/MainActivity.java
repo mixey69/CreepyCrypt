@@ -27,20 +27,18 @@ public class MainActivity extends AppCompatActivity implements MainActivityInter
     @Inject
     PresenterInterface presenter;
 
-    public static MainViewModel mainViewModel;
+    private MainViewModel mainViewModel;
     private ActivityMainBinding binding;
     private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (mainViewModel == null) {
-            mainViewModel = new MainViewModel();
-        }
+        mainViewModel = new MainViewModel();
         CreepyApplication.getComponent().inject(this);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setCurrencyList(mainViewModel);
-//        android:onQueryTextChange="@{(text) -> currencyList.onQueryTextChanged(text)}"
+        binding.executePendingBindings();
         binding.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -61,19 +59,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityInter
         RecyclerView recyclerView = findViewById(R.id.list);
         int spacing = Math.round(16 * getResources().getDisplayMetrics().density);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(getResources().getConfiguration().orientation == ORIENTATION_LANDSCAPE ? 2 : 1, spacing, true));
-
-//        binding.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                binding.search.clearFocus();
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                return false;
-//            }
-//        });
     }
 
     @Override
@@ -82,8 +67,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityInter
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
         presenter.onStart(this);
         presenter.getData();
     }
@@ -102,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityInter
         progress = new ProgressDialog(this);
         progress.setTitle("Loading");
         progress.setMessage("Wait while loading...");
-        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+        progress.setCancelable(false);
         progress.show();
     }
 
@@ -111,7 +96,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityInter
         if (progress != null) {
             progress.dismiss();
         }
-        Snackbar.make(binding.getRoot(), message, Snackbar.LENGTH_SHORT);
+        if(binding != null){
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -119,7 +106,12 @@ public class MainActivity extends AppCompatActivity implements MainActivityInter
         if (progress != null) {
             progress.dismiss();
         }
-        mainViewModel.setCurrencies(currencyList);
+        mainViewModel.init(currencyList);
         binding.setCurrencyList(mainViewModel);
+    }
+
+    @Override
+    public void setSpinnerSelection(int pos) {
+        binding.order.setSelection(pos, false);
     }
 }

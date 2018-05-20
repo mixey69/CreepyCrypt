@@ -4,23 +4,40 @@ import android.databinding.ObservableArrayList;
 import android.databinding.ObservableList;
 
 import com.software.m.m.creppycrypt.BR;
+import com.software.m.m.creppycrypt.CreepyApplication;
 import com.software.m.m.creppycrypt.R;
 import com.software.m.m.creppycrypt.model.Currency;
+import com.software.m.m.creppycrypt.presenter.PresenterInterface;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
+
+import static com.software.m.m.creppycrypt.presenter.PresenterInterface.ORDER_BY_CAP;
+import static com.software.m.m.creppycrypt.presenter.PresenterInterface.ORDER_BY_CHANGE;
+import static com.software.m.m.creppycrypt.presenter.PresenterInterface.ORDER_BY_RANK;
+import static com.software.m.m.creppycrypt.presenter.PresenterInterface.ORDER_BY_VOL;
 
 public class MainViewModel {
 
+    @Inject
+    PresenterInterface presenter;
     private List<Currency> currencyList;
+    private int displayOrder = ORDER_BY_RANK;
     public String[] sortBy = {"Rank", "Cap.", "Volume 24h", "Change 24h"};
     public ObservableList<CurrencyItemViewModel> currencyItemViewModels = new ObservableArrayList<>();
     public ItemBinding<CurrencyItemViewModel> currencyItemBinding = ItemBinding.of(BR.item, R.layout.currency_list_item);
 
-    public void setCurrencies(List<Currency> currencies) {
+    public MainViewModel() {
+        super();
+        CreepyApplication.getComponent().inject(this);
+    }
+
+    public void init(List<Currency> currencies) {
         if(currencyList != null){
             if(currencyList.equals(currencies) && currencyItemViewModels.equals(currencies)){
                 return;
@@ -28,11 +45,13 @@ public class MainViewModel {
         }else {
             currencyList = currencies;
         }
-        currencyItemViewModels.clear();
         for(Currency c : currencies){
             CurrencyItemViewModel vm = new CurrencyItemViewModel();
             vm.currency = c;
             currencyItemViewModels.add(vm);
+        }
+        if(displayOrder != presenter.getDisplayOrder()){
+            presenter.showDisplayOrder();
         }
     }
 
@@ -40,23 +59,28 @@ public class MainViewModel {
         switch (pos){
             case 0 :
                 Collections.sort(currencyItemViewModels, (o1, o2) -> o1.currency.rank - o2.currency.rank);
+                displayOrder = ORDER_BY_RANK;
                 break;
             case 1:
                 Collections.sort(currencyItemViewModels, (o1, o2) -> (int)(o2.currency.marketCapUsd - o1.currency.marketCapUsd));
+                displayOrder = ORDER_BY_CAP;
                 break;
             case 2:
                 Collections.sort(currencyItemViewModels, (o1, o2) -> (int)(o2.currency._24hVolumeUsd - o1.currency._24hVolumeUsd));
+                displayOrder = ORDER_BY_VOL;
                 break;
             case 3:
                 Collections.sort(currencyItemViewModels, (o1, o2) -> (int)(o2.currency.percentChange24h - o1.currency.percentChange24h));
+                displayOrder = ORDER_BY_CHANGE;
                 break;
         }
+        presenter.setDisplayOrder(displayOrder);
     }
 
     public void onQueryTextChanged(String text){
         if(currencyList != null){
         if(text.equals("")){
-            setCurrencies(currencyList);
+            init(currencyList);
         }else {
             List<Currency> filteredList = new ArrayList<>();
             for (Currency c : currencyList){
@@ -64,7 +88,7 @@ public class MainViewModel {
                     filteredList.add(c);
                 }
             }
-            setCurrencies(filteredList);
+            init(filteredList);
         }
         }
     }
