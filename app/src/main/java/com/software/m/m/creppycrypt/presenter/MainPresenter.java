@@ -15,6 +15,7 @@ public class MainPresenter implements PresenterInterface {
     private MainActivityInterface viewI;
     private Currency displayedCurrency;
     private int displayOrder;
+    private String searchQuery = "";
 
     public MainPresenter() {
         super();
@@ -75,5 +76,15 @@ public class MainPresenter implements PresenterInterface {
     @Override
     public void showDisplayOrder() {
         viewI.setSpinnerSelection(displayOrder);
+    }
+
+    @Override
+    public void setSearchQuery(String query) {
+            searchQuery = query;
+    }
+
+    @Override
+    public String getSearchQuery() {
+        return searchQuery;
     }
 }

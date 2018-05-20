@@ -28,6 +28,7 @@ public class MainViewModel {
     PresenterInterface presenter;
     private List<Currency> currencyList;
     private int displayOrder = ORDER_BY_RANK;
+    private String searchQuery = "";
     public String[] sortBy = {"Rank", "Cap.", "Volume 24h", "Change 24h"};
     public ObservableList<CurrencyItemViewModel> currencyItemViewModels = new ObservableArrayList<>();
     public ItemBinding<CurrencyItemViewModel> currencyItemBinding = ItemBinding.of(BR.item, R.layout.currency_list_item);
@@ -45,6 +46,14 @@ public class MainViewModel {
         }else {
             currencyList = currencies;
         }
+        updateList(currencies);
+        if(!presenter.getSearchQuery().equals(searchQuery)){
+            onQueryTextChanged(presenter.getSearchQuery());
+        }
+    }
+
+    private void updateList(List<Currency> currencies){
+        currencyItemViewModels.clear();
         for(Currency c : currencies){
             CurrencyItemViewModel vm = new CurrencyItemViewModel();
             vm.currency = c;
@@ -52,6 +61,8 @@ public class MainViewModel {
         }
         if(displayOrder != presenter.getDisplayOrder()){
             presenter.showDisplayOrder();
+        }else {
+            onSpinnerItemSelected(displayOrder);
         }
     }
 
@@ -78,9 +89,12 @@ public class MainViewModel {
     }
 
     public void onQueryTextChanged(String text){
+        searchQuery = text;
+        presenter.setSearchQuery(searchQuery);
         if(currencyList != null){
         if(text.equals("")){
-            init(currencyList);
+            updateList(currencyList);
+//            init(currencyList);
         }else {
             List<Currency> filteredList = new ArrayList<>();
             for (Currency c : currencyList){
@@ -88,7 +102,8 @@ public class MainViewModel {
                     filteredList.add(c);
                 }
             }
-            init(filteredList);
+            updateList(filteredList);
+//            init(filteredList);
         }
         }
     }

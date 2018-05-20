@@ -39,18 +39,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityInter
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setCurrencyList(mainViewModel);
         binding.executePendingBindings();
-        binding.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                mainViewModel.onQueryTextChanged(newText);
-                return false;
-            }
-        });
         binding.search.setQueryHint("Search");
         binding.search.onActionViewExpanded();
         binding.search.setIconified(false);
@@ -67,10 +55,22 @@ public class MainActivity extends AppCompatActivity implements MainActivityInter
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         presenter.onStart(this);
         presenter.getData();
+        binding.search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mainViewModel.onQueryTextChanged(newText);
+                return false;
+            }
+        });
     }
 
     @Override

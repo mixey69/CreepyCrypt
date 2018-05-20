@@ -19,5 +19,7 @@ public interface PresenterInterface {
     void setDisplayOrder(int displayOrder);
     int getDisplayOrder();
     void showDisplayOrder();
+    void setSearchQuery(String query);
+    String getSearchQuery();
     Currency getDisplayedCurrency();
 }
