@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">CreppyCrypt</string>
-    <string name="last_24_hours">Last 24 hours:</string>
+    <string name="last_24_hours"><u>Last 24 hours:</u></string>
     <string name="sort_by">Sort by:</string>
-    <string name="changed_in">Changed in:</string>
+    <string name="changed_in"><u>Changed in:</u></string>
+    <string name="search">Search</string>
 </resources>

@@ -39,9 +39,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityInter
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.setCurrencyList(mainViewModel);
         binding.executePendingBindings();
-        binding.search.setQueryHint("Search");
         binding.search.onActionViewExpanded();
-        binding.search.setIconified(false);
         binding.search.clearFocus();
 
         RecyclerView recyclerView = findViewById(R.id.list);
@@ -51,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityInter
 
     @Override
     public void showCurrency(Currency currency) {
-        new CurrencyInfoFragment().show(getSupportFragmentManager(), "TAG");
+        new CurrencyInfoFragment().show(getSupportFragmentManager(), "INFO");
     }
 
     @Override
@@ -96,8 +94,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityInter
         if (progress != null) {
             progress.dismiss();
         }
-        if(binding != null){
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show();
+        if (binding != null) {
+            Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show();
         }
     }
 

@@ -39,72 +39,70 @@ public class MainViewModel {
     }
 
     public void init(List<Currency> currencies) {
-        if(currencyList != null){
-            if(currencyList.equals(currencies) && currencyItemViewModels.equals(currencies)){
+        if (currencyList != null) {
+            if (currencyList.equals(currencies) && currencyItemViewModels.equals(currencies)) {
                 return;
             }
-        }else {
+        } else {
             currencyList = currencies;
         }
         updateList(currencies);
-        if(!presenter.getSearchQuery().equals(searchQuery)){
+        if (!presenter.getSearchQuery().equals(searchQuery)) {
             onQueryTextChanged(presenter.getSearchQuery());
         }
     }
 
-    private void updateList(List<Currency> currencies){
+    private void updateList(List<Currency> currencies) {
         currencyItemViewModels.clear();
-        for(Currency c : currencies){
+        for (Currency c : currencies) {
             CurrencyItemViewModel vm = new CurrencyItemViewModel();
             vm.currency = c;
             currencyItemViewModels.add(vm);
         }
-        if(displayOrder != presenter.getDisplayOrder()){
+        if (displayOrder != presenter.getDisplayOrder()) {
             presenter.showDisplayOrder();
-        }else {
+        } else {
             onSpinnerItemSelected(displayOrder);
         }
     }
 
-    public void onSpinnerItemSelected(int pos){
-        switch (pos){
-            case 0 :
+    public void onSpinnerItemSelected(int pos) {
+        switch (pos) {
+            case 0:
                 Collections.sort(currencyItemViewModels, (o1, o2) -> o1.currency.rank - o2.currency.rank);
                 displayOrder = ORDER_BY_RANK;
                 break;
             case 1:
-                Collections.sort(currencyItemViewModels, (o1, o2) -> (int)(o2.currency.marketCapUsd - o1.currency.marketCapUsd));
+                Collections.sort(currencyItemViewModels, (o1, o2) -> (int) (o2.currency.marketCapUsd - o1.currency.marketCapUsd));
                 displayOrder = ORDER_BY_CAP;
                 break;
             case 2:
-                Collections.sort(currencyItemViewModels, (o1, o2) -> (int)(o2.currency._24hVolumeUsd - o1.currency._24hVolumeUsd));
+                Collections.sort(currencyItemViewModels, (o1, o2) -> (int) (o2.currency._24hVolumeUsd - o1.currency._24hVolumeUsd));
                 displayOrder = ORDER_BY_VOL;
                 break;
             case 3:
-                Collections.sort(currencyItemViewModels, (o1, o2) -> (int)(o2.currency.percentChange24h - o1.currency.percentChange24h));
+                Collections.sort(currencyItemViewModels, (o1, o2) -> (int) (o2.currency.percentChange24h - o1.currency.percentChange24h));
                 displayOrder = ORDER_BY_CHANGE;
                 break;
         }
         presenter.setDisplayOrder(displayOrder);
     }
 
-    public void onQueryTextChanged(String text){
+    public void onQueryTextChanged(String text) {
         searchQuery = text;
         presenter.setSearchQuery(searchQuery);
-        if(currencyList != null){
-        if(text.equals("")){
-            updateList(currencyList);
-//            init(currencyList);
-        }else {
-            List<Currency> filteredList = new ArrayList<>();
-            for (Currency c : currencyList){
-                if(c.name.toLowerCase().contains(text.toLowerCase()) || c.symbol.contains(text.toUpperCase())){
-                    filteredList.add(c);
+        if (currencyList != null) {
+            if (text.equals("")) {
+                updateList(currencyList);
+            } else {
+                List<Currency> filteredList = new ArrayList<>();
+                for (Currency c : currencyList) {
+                    if (c.name.toLowerCase().contains(text.toLowerCase()) || c.symbol.contains(text.toUpperCase())) {
+                        filteredList.add(c);
+                    }
                 }
+                updateList(filteredList);
             }
-            updateList(filteredList);
-//            init(filteredList);
-        }
         }
     }
 }

@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
+            android:textColor="@android:color/black"
             android:text='@{item.name + " ," + item.symbol}'
             android:id="@+id/name"
             android:layout_width="match_parent"
@@ -57,14 +58,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@{item.percentChange1h > 0? @color/colorPrimaryDark : @color/colorAccent}"
             android:text='@{"Last hour: " + item.percentChange1h + "%"}' />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@{item.percentChange24h > 0? @color/colorPrimaryDark : @color/colorAccent}"
             android:text='@{"Last 24 hours: " + item.percentChange24h + "%"}' />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@{item.percentChange7d > 0? @color/colorPrimaryDark : @color/colorAccent}"
             android:text='@{"Last week: " + item.percentChange7d + "%"}' />
 
         <TextView

@@ -37,25 +37,27 @@
                     app:layout_collapseMode="parallax">
 
                     <android.support.v7.widget.SearchView
-                        android:layout_weight="5"
                         android:id="@+id/search"
                         android:layout_width="1dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        app:iconifiedByDefault="false"
+                        app:queryHint="@string/search" />
 
                     <TextView
-                        android:gravity="center_vertical|end"
-                        android:layout_weight="2"
-                        android:text="@string/sort_by"
                         android:layout_width="1dp"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical|end"
+                        android:text="@string/sort_by" />
 
                     <Spinner
                         android:id="@+id/order"
-                        android:layout_weight="3"
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
+                        android:layout_weight="3"
                         android:entries="@{currencyList.sortBy}"
-                        android:onItemSelected="@{(parent,view,pos,id) -> currencyList.onSpinnerItemSelected(pos)}"/>
+                        android:onItemSelected="@{(parent,view,pos,id) -> currencyList.onSpinnerItemSelected(pos)}" />
 
                 </LinearLayout>
 

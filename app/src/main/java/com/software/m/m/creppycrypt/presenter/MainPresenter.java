@@ -12,7 +12,7 @@ import javax.inject.Inject;
 public class MainPresenter implements PresenterInterface {
     @Inject
     ModelInterface model;
-    private MainActivityInterface viewI;
+    private MainActivityInterface view;
     private Currency displayedCurrency;
     private int displayOrder;
     private String searchQuery = "";
@@ -23,16 +23,16 @@ public class MainPresenter implements PresenterInterface {
     }
 
     @Override
-    public void onStart(MainActivityInterface viewI) {
-        this.viewI = viewI;
+    public void onStart(MainActivityInterface view) {
+        this.view = view;
     }
 
     @Override
     public void getData() {
         if(model.hasData()){
-            viewI.displayCurrencyList(model.getLoadedData());
+            view.displayCurrencyList(model.getLoadedData());
         }else {
-            viewI.showWait();
+            view.showWait();
             model.getData(this);
         }
     }
@@ -40,7 +40,7 @@ public class MainPresenter implements PresenterInterface {
     @Override
     public void showCurrency(Currency currency) {
         displayedCurrency = currency;
-        viewI.showCurrency(currency);
+        view.showCurrency(currency);
     }
 
     @Override
@@ -50,17 +50,17 @@ public class MainPresenter implements PresenterInterface {
 
     @Override
     public void onStop() {
-        viewI = null;
+        view = null;
     }
 
     @Override
     public void updateData(List<Currency> data) {
-        viewI.displayCurrencyList(data);
+        view.displayCurrencyList(data);
     }
 
     @Override
     public void showError(String message) {
-        viewI.showError(message);
+        view.showError(message);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class MainPresenter implements PresenterInterface {
 
     @Override
     public void showDisplayOrder() {
-        viewI.setSpinnerSelection(displayOrder);
+        view.setSpinnerSelection(displayOrder);
     }
 
     @Override
