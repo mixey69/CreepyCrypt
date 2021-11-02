@@ -6,6 +6,7 @@ import com.software.m.m.creppycrypt.presenter.PresenterInterface;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -28,8 +29,10 @@ public class ModelImpl implements ModelInterface {
         Observable.fromCallable(new Callable<Response>() {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url("https://api.coinmarketcap.com/v1/ticker/")
+                    .url("https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest")
+                    .header("X-CMC_PRO_API_KEY", "")
                     .build();
+
 
             @Override
             public Response call() throws Exception {
@@ -49,12 +52,10 @@ public class ModelImpl implements ModelInterface {
                         try {
                             String s = response.body().string();
                             Gson gson = new Gson();
-                            Type listType = new TypeToken<List<Currency>>() {
+                            Type listType = new TypeToken<DataResponse>() {
                             }.getType();
-                            List<Currency> currencies = gson.fromJson(s, listType);
-                            for (Currency c : currencies) {
-                                c.updateDate();
-                            }
+                            DataResponse dataResponse = gson.fromJson(s, listType);
+                            currencies = Arrays.asList(dataResponse.data);
                             Collections.sort(currencies, (o1, o2) -> o1.rank - o2.rank);
                             ModelImpl.this.currencies = currencies;
                             presenter.updateData(currencies);

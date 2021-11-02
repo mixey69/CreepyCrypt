@@ -66,6 +66,7 @@ public class MainPresenter implements PresenterInterface {
     @Override
     public void setDisplayOrder(int displayOrder) {
         this.displayOrder = displayOrder;
+        view.redrawList();
     }
 
     @Override

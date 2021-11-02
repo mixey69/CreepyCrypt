@@ -10,4 +10,6 @@ public interface MainActivityInterface {
     void showError(String message);
     void showCurrency(Currency currency);
     void setSpinnerSelection(int pos);
+
+    void redrawList();
 }

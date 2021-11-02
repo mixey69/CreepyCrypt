@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityInter
     private MainViewModel mainViewModel;
     private ActivityMainBinding binding;
     private ProgressDialog progress;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityInter
         binding.search.onActionViewExpanded();
         binding.search.clearFocus();
 
-        RecyclerView recyclerView = findViewById(R.id.list);
+        recyclerView = findViewById(R.id.list);
         int spacing = Math.round(16 * getResources().getDisplayMetrics().density);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(getResources().getConfiguration().orientation == ORIENTATION_LANDSCAPE ? 2 : 1, spacing, true));
     }
@@ -111,5 +112,10 @@ public class MainActivity extends AppCompatActivity implements MainActivityInter
     @Override
     public void setSpinnerSelection(int pos) {
         binding.order.setSelection(pos, false);
+    }
+
+    @Override
+    public void redrawList() {
+        recyclerView.getAdapter().notifyDataSetChanged();
     }
 }

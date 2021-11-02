@@ -73,15 +73,15 @@ public class MainViewModel {
                 displayOrder = ORDER_BY_RANK;
                 break;
             case 1:
-                Collections.sort(currencyItemViewModels, (o1, o2) -> (int) (o2.currency.marketCapUsd - o1.currency.marketCapUsd));
+                Collections.sort(currencyItemViewModels, (o1, o2) -> (int) (o2.currency.quote.priceUsd.marketCapUsd - o1.currency.quote.priceUsd.marketCapUsd));
                 displayOrder = ORDER_BY_CAP;
                 break;
             case 2:
-                Collections.sort(currencyItemViewModels, (o1, o2) -> (int) (o2.currency._24hVolumeUsd - o1.currency._24hVolumeUsd));
+                Collections.sort(currencyItemViewModels, (o1, o2) -> (int) (o2.currency.quote.priceUsd._24hVolumeUsd - o1.currency.quote.priceUsd._24hVolumeUsd));
                 displayOrder = ORDER_BY_VOL;
                 break;
             case 3:
-                Collections.sort(currencyItemViewModels, (o1, o2) -> (int) (o2.currency.percentChange24h - o1.currency.percentChange24h));
+                Collections.sort(currencyItemViewModels, (o1, o2) -> (int) (o2.currency.quote.priceUsd.percentChange24h - o1.currency.quote.priceUsd.percentChange24h));
                 displayOrder = ORDER_BY_CHANGE;
                 break;
         }

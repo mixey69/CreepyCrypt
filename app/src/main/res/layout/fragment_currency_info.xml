@@ -27,12 +27,12 @@
             android:id="@+id/price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text='@{"Price BTC/USD: " + item.priceBtc + "/" + item.priceUsd}' />
+            android:text='@{"Price USD: "  + item.quote.priceUsd.priceUsd}' />
         <TextView
             android:id="@+id/cap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text='@{"Capitalization: $" + item.marketCapUsd/1000000 + "M"}' />
+            android:text='@{"Capitalization: $" + item.quote.priceUsd.marketCapUsd/1000000 + "M"}' />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
             android:id="@+id/vol_24h"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text='@{"Last 24 hour trade volume: $" + item._24hVolumeUsd/1000000 + "M"}' />
+            android:text='@{"Last 24 hour trade volume: $" + item.quote.priceUsd._24hVolumeUsd/1000000 + "M"}' />
 
         <TextView
             android:layout_width="match_parent"
@@ -58,23 +58,23 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@{item.percentChange1h > 0? @color/colorPrimaryDark : @color/colorAccent}"
-            android:text='@{"Last hour: " + item.percentChange1h + "%"}' />
+            android:textColor="@{item.quote.priceUsd.percentChange1h > 0? @color/colorPrimaryDark : @color/colorAccent}"
+            android:text='@{"Last hour: " + item.quote.priceUsd.percentChange1h + "%"}' />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@{item.percentChange24h > 0? @color/colorPrimaryDark : @color/colorAccent}"
-            android:text='@{"Last 24 hours: " + item.percentChange24h + "%"}' />
+            android:textColor="@{item.quote.priceUsd.percentChange24h > 0? @color/colorPrimaryDark : @color/colorAccent}"
+            android:text='@{"Last 24 hours: " + item.quote.priceUsd.percentChange24h + "%"}' />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@{item.percentChange7d > 0? @color/colorPrimaryDark : @color/colorAccent}"
-            android:text='@{"Last week: " + item.percentChange7d + "%"}' />
+            android:textColor="@{item.quote.priceUsd.percentChange7d > 0? @color/colorPrimaryDark : @color/colorAccent}"
+            android:text='@{"Last week: " + item.quote.priceUsd.percentChange7d + "%"}' />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text='@{"Last update: " + item.dateFromLastUpdated}' />
+            android:text='@{"Last update: " + item.lastUpdated}' />
     </LinearLayout>
     </android.support.v7.widget.CardView>
 
